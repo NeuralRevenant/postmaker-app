@@ -1,0 +1,13 @@
+ion-content {
+    --background: url("https://neilpatel.com/wp-content/uploads/2017/09/blog-post-image-guide.jpg");
+}
+input[type="file"] {
+    visibility: hidden;
+}
+.imgPrv {
+    height: 5rem;
+    margin: 1rem 0;
+}
+.imgPrv img {
+    height: 100%;
+}

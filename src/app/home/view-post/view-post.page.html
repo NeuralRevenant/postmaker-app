@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ postData?.title }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="isLoading" class="ion-text-center" style="margin-top: 20px;">
+    <ion-spinner color="light"></ion-spinner>
+  </div>
+  <ion-card *ngIf="!isLoading && postData" class="ion-text-center">
+    <ion-img [src]="postData.imagePath" [alt]="postData.title" style="width: 100%;padding: 0;margin: 0;"></ion-img>
+    <ion-card-header>
+      <ion-toolbar color="none">
+        <ion-card-title style="font-weight: 700;font-family: 'Lemonada', cursive;">
+          {{ postData.title | uppercase}}
+        </ion-card-title>
+        <ion-button fill="clear" [routerLink]="['/edit', postData?.id]" slot="end">
+          <ion-icon name="create-outline" slot="icon-only" color="danger"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+      
+      <ion-card-subtitle style="font-weight: 700;font-family: 'Lemonada', cursive;">{{ postData.content }}</ion-card-subtitle>
+    </ion-card-header>
+    <!-- <ion-card-content>{{ postData.content }}</ion-card-content> -->
+  </ion-card>
+</ion-content>
