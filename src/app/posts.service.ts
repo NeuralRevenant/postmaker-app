@@ -93,10 +93,12 @@ export class PostsService {
     }
 
     deletePost(postId: string) {
-        this.http.delete(`http://localhost:3000/api/posts/${postId}`)
-            .subscribe(() => {
+        return this.http.delete(`http://localhost:3000/api/posts/${postId}`)
+            .pipe(map((data: { message: string }) => {
+                console.log(data.message);
                 const updatedPosts = this._posts.value.filter(post => post.id !== postId);
                 this._posts.next(updatedPosts);
-            });
+                return updatedPosts;
+            }),take(1));
     }
 }

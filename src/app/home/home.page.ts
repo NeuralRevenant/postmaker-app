@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { PostsService } from '../posts.service';
 import { Post } from '../post.model';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ export class HomePage implements OnInit, OnDestroy {
   subs: Subscription;
   fetchSub: Subscription;
 
-  constructor(private postsServ: PostsService, private router: Router) { }
+  constructor(private postsServ: PostsService, private router: Router, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.subs = this.postsServ.posts.subscribe(posts => {
@@ -31,7 +32,16 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   delete(id: string) {
-    this.postsServ.deletePost(id);
+    this.loadingCtrl.create({
+      message: 'Deleting ...',
+      keyboardClose: true
+    }).then(loadEl => {
+      loadEl.present();
+      this.postsServ.deletePost(id).subscribe((posts) => {
+        this.loadedPosts = posts;
+        loadEl.dismiss();
+      });
+    });
   }
 
   ngOnDestroy() {
